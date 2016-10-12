@@ -1,0 +1,27 @@
+{
+  "name": "lbc_immo",
+  "version": "1.0.0",
+  "description": "test nightmare",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nightmare": "^2.7.0",
+    "co": "^4.6.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pierre-Michard/lbc_scrap.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Pierre-Michard/lbc_scrap/issues"
+  },
+  "homepage": "https://github.com/Pierre-Michard/lbc_scrap#readme"
+}

@@ -3,7 +3,7 @@ var co = require('co')
 
 var expect = require('chai').expect,
     LeBonCoin = require('../index'),
-    subject = new LeBonCoin()
+    subject = new LeBonCoin({show: true})
 
 describe('#new', function() {
   it('initalizes max_price', function() {

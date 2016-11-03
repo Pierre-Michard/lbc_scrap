@@ -8,13 +8,14 @@ var default_params = {
   'max_price': 400000,
   'min_rooms': 3,
   'min_area': 55,
-  'locations': ['75013', '75020']
+  'locations': ['75013', '75020'],
+  'show': false
 }
 
 function LeBonCoin(args){
-  this.nightmare = Nightmare({show: true });
 
   args = extend(default_params, (args||{}))
+  this.nightmare = Nightmare({show: args['show'] });
 
   this.max_price = args['max_price']
   this.min_rooms = args['min_rooms']

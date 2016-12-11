@@ -66,13 +66,16 @@ LeBonCoin.prototype.get_announce = function*(){
         if (picture_url !== undefined) {
           picture_url = window.location.protocol + picture_url;
         }
+        let publication_date = $this.find('aside').text().trim();
+        publication_date = new Date(publication_date);
+        publication_date.setFullYear(2016);
         results.push(
           {
             title:    $this.find('h2.item_title').text().trim(),
-            price:    $this.find('h3.item_price').text().trim(),
+            price:    parseInt($this.find('h3.item_price').text().replace(/[\n\s€]/g,'')),
             url:      window.location.protocol + $this.find('a').attr('href'),
             picture:  picture_url,
-            publication_date:  $this.find('aside').text().trim()
+            publication_date: publication_date
           }
         );
       });

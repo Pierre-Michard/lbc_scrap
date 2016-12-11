@@ -1,10 +1,10 @@
 {
   "name": "lbc_immo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "test nightmare",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "mocha"
   },
   "author": "",
   "license": "ISC",

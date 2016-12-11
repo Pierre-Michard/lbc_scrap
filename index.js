@@ -1,8 +1,8 @@
 'use strict'
 
-var co = require('co')
-var Nightmare = require('nightmare')
-var extend = require('util')._extend
+var co = require('co');
+var Nightmare = require('nightmare');
+var extend = require('util')._extend;
 
 var default_params = {
   'max_price': 400000,
@@ -10,17 +10,17 @@ var default_params = {
   'min_area': 55,
   'locations': ['75013', '75020'],
   'show': false
-}
+};
 
 function LeBonCoin(args){
 
-  args = extend(default_params, (args||{}))
+  args = extend(default_params, (args||{}));
   this.nightmare = Nightmare({show: args['show'] });
 
-  this.max_price = args['max_price']
-  this.min_rooms = args['min_rooms']
-  this.min_area = args['min_area']
-  this.locations = args['locations']
+  this.max_price = args['max_price'];
+  this.min_rooms = args['min_rooms'];
+  this.min_area = args['min_area'];
+  this.locations = args['locations'];
 
   return this;
 }
@@ -29,24 +29,24 @@ function LeBonCoin(args){
 LeBonCoin.prototype.set_locations = function*(locations){
   for (let location of locations){
     yield this.nightmare.type('[name = location_p]', location)
-      .wait(1000)
+      .wait(4000)
       .click('ul.location-list li:nth-child(2)')
   }
-}
+};
 
 LeBonCoin.prototype.set_max = function*(field, max_value){
   var self = this;
   yield self.nightmare
     .evaluate(function (field, max_value) {
-      let select = $(`option:contains('${field}')`).parent()
-      var res = {'id': select.attr('id')}
+      let select = $(`option:contains('${field}')`).parent();
+      var res = {'id': select.attr('id')};
       select.find('option').each(function(){
-        let value = parseInt(this.text.replace(/\s/g, ''))
+        let value = parseInt(this.text.replace(/\s/g, ''));
         if(value >= max_value){
           res ['value']= this.value;
           return false;
         }
-      })
+      });
       return res;
     }, field, max_value).
     then(function(res){
@@ -61,7 +61,7 @@ LeBonCoin.prototype.get_announce = function*(){
     .evaluate(function () {
       var results = [];
       $(".tabsContent li").each(function(){
-        $this = $(this);
+        let $this = $(this);
         let picture_url = $this.find('span.item_imagePic span').attr('data-imgsrc');
         if (picture_url !== undefined) {
           picture_url = window.location.protocol + picture_url;
@@ -81,22 +81,22 @@ LeBonCoin.prototype.get_announce = function*(){
       res = results;
     });
     return res;
-}
+};
 
 LeBonCoin.prototype.setup_search = function*(){
   yield this.nightmare
     .goto('https://www.leboncoin.fr/ventes_immobilieres/offres/ile_de_france/?th=1')
-    .click('span[data-toggleclass="searchbar-open"]')
+    .click('span[data-toggleclass="searchbar-open"]');
 
   yield this.set_max('Surface min', 50);
   yield this.set_max('Prix max', 450000);
   yield this.set_max('Pièces min', 3);
-  yield this.set_locations(['75013', '75020']);
+  yield this.set_locations(['75013', '75020'])
 
   yield this.nightmare.click('#searchbutton')
                  .wait('#main');
   return this
-}
+};
 
 LeBonCoin.prototype.get_announces = function*(){
   var self = this;
@@ -108,7 +108,7 @@ LeBonCoin.prototype.get_announces = function*(){
   }
   yield self.nightmare.end();
   return results;
-}
+};
 
 function res(result) {
   return result;
@@ -121,6 +121,6 @@ LeBonCoin.prototype.get_results = function (){
     yield self.setup_search();
     return yield self.get_announces();
   })
-}
+};
 
-module.exports = LeBonCoin
+module.exports = LeBonCoin;
